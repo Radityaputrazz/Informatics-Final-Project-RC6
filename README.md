@@ -26,8 +26,3 @@ Proyek ini mengimplementasikan RC6 dengan parameter standar:
 - **Key size (b):** 16/24/32 bytes
 
 Algoritma ini dipilih karena efisiensinya dalam pemrosesan data pada arsitektur modern dan tingkat keamanan yang tinggi terhadap serangan kriptanalisis linear maupun diferensial.
-
-## ⚙️ Instalasi
-1. Clone repository ini:
-   ```bash
-   git clone [https://github.com/username-anda/bellagio-mansion-security-rc6.git](https://github.com/username-anda/bellagio-mansion-security-rc6.git)
