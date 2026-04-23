@@ -1,1 +1,9 @@
-*.js linguist-vendored
+# Tandai semua folder yang berisi library/style sebagai 'vendored' (diabaikan)
+assets/** linguist-vendored
+css/** linguist-vendored
+js/** linguist-vendored
+vendor/** linguist-vendored
+
+# Paksa semua file .php untuk dihitung sebagai bahasa utama
+*.php linguist-detectable
+*.php linguist-language=PHP
