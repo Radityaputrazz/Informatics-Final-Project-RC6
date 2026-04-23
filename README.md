@@ -26,3 +26,13 @@ Proyek ini mengimplementasikan RC6 dengan parameter standar:
 - **Key size (b):** 16/24/32 bytes
 
 Algoritma ini dipilih karena efisiensinya dalam pemrosesan data pada arsitektur modern dan tingkat keamanan yang tinggi terhadap serangan kriptanalisis linear maupun diferensial.
+
+## ⚙️ Instalasi
+1. Clone repository ini:
+   git clone https://github.com/Radityaputrazz/Informatics-Final-Project-RC6.git
+   
+3. Import file database .sql (tersedia di folder database) ke MySQL Anda.
+
+4. Sesuaikan konfigurasi database pada file config.php.
+
+5. Jalankan aplikasi di server lokal (XAMPP/Laragon/WAMP).
