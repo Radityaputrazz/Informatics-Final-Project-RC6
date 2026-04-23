@@ -171,7 +171,7 @@ $data = mysqli_fetch_array($query_user);
                     
                     <?php if ($data['status'] == 1): ?>
                     <li class="treeview">
-                        <a href="#"><i class="fa fa-shield"></i><span>Layanan Kripto</span><i class="fa fa-angle-right"></i></a>
+                        <a href="#"><i class="fa fa-shield"></i><span>File</span><i class="fa fa-angle-right"></i></a>
                         <ul class="treeview-menu">
                             <li><a href="encrypt.php"><i class="fa fa-lock"></i> Enkripsi</a></li>
                             <li><a href="decrypt.php"><i class="fa fa-unlock"></i> Dekripsi</a></li>

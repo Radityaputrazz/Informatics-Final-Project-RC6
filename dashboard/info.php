@@ -32,7 +32,15 @@ $data = mysqli_fetch_array($query_user);
     
     <style>
         /* Modern Theme Overrides */
-        .main-header .logo { background-color: #1e3a8a !important; font-weight: 700; letter-spacing: 0.5px; }
+        .main-header .logo { 
+            background-color: #1e3a8a !important; 
+            font-weight: 700; 
+            letter-spacing: 0.5px;
+            font-size: 11pt !important;
+            line-height: 50px;
+            height: 50px;
+            padding: 0 15px;
+        }
         .navbar { background-color: #2563eb !important; }
         .main-sidebar { background-color: #0f172a !important; }
         

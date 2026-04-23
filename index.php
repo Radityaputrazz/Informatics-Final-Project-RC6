@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Jika sudah login, langsung redirect
+// Jika sudah login, langsung redirect sesuai role
 if (isset($_SESSION['username'])) {
     $routes = [1 => 'dashboard/index.php', 2 => 'dashboard/info.php'];
     $dest   = $routes[$_SESSION['status']] ?? 'dashboard/history.php';
@@ -9,229 +9,280 @@ if (isset($_SESSION['username'])) {
     exit;
 }
 
-// Ambil pesan error dari session (dikirim oleh auth.php)
+// Ambil pesan error dari session
 $loginError = $_SESSION['login_error'] ?? '';
 unset($_SESSION['login_error']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login — The Bellagio Mansion</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/ubl.png">
+    <title>Login — The Bellagio Mansion Security</title>
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* Reset & Base Styles */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f5f4f1;
-      padding: 1rem;
-    }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9; /* Slate 100 */
+            padding: 1.5rem;
+        }
 
-    .wrapper { width: 100%; max-width: 380px; }
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            animation: fadeIn 0.6s ease-out;
+        }
 
-    .header { text-align: center; margin-bottom: 2rem; }
+        /* 1. Brand Header & Logo Placement */
+        .brand-section {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
 
-    .logo-circle {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: #ffffff;
-      border: 1px solid #e0ddd6;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1rem;
-    }
+        .logo-wrapper {
+            width: 250px;
+            height: 100px;
+            background: #ffffff;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 18px;
+        }
 
-    .header h1 { font-size: 18px; font-weight: 500; color: #1a1a18; }
-    .header p  { font-size: 13px; color: #888780; margin-top: 4px; }
+        .logo-wrapper img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
 
-    .card {
-      background: #ffffff;
-      border: 1px solid #e8e6e0;
-      border-radius: 12px;
-      padding: 1.75rem 1.5rem;
-    }
+        .brand-section h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a; /* Slate 900 */
+            letter-spacing: -0.025em;
+        }
 
-    .field { margin-bottom: 1rem; }
+        .brand-section p {
+            font-size: 14px;
+            color: #64748b; /* Slate 500 */
+            margin-top: 4px;
+        }
 
-    label {
-      display: block;
-      font-size: 11px; font-weight: 500;
-      color: #888780;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
+        /* 2. Login Card */
+        .login-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
 
-    .input-wrap { position: relative; }
+        .form-group { margin-bottom: 1.5rem; }
 
-    .input-wrap svg.field-icon {
-      position: absolute; left: 10px; top: 50%;
-      transform: translateY(-50%);
-      width: 15px; height: 15px;
-      stroke: #888780;
-      pointer-events: none;
-    }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-    .input-wrap input {
-      width: 100%; height: 40px;
-      padding: 0 12px 0 34px;
-      font-size: 14px; font-family: inherit;
-      color: #1a1a18;
-      background: #f5f4f1;
-      border: 1px solid #d3d1c7;
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.15s;
-    }
+        .input-group { position: relative; }
 
-    .input-wrap input:focus {
-      border-color: #888780;
-      background: #ffffff;
-    }
+        .input-group i.input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
 
-    .input-wrap input::placeholder { color: #b4b2a9; }
+        .input-group input {
+            width: 100%;
+            height: 50px;
+            padding: 0 16px 0 48px;
+            font-size: 15px;
+            color: #1e293b;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    .toggle-btn {
-      position: absolute; right: 10px; top: 50%;
-      transform: translateY(-50%);
-      background: none; border: none;
-      cursor: pointer; padding: 0;
-      display: flex; align-items: center;
-      color: #888780;
-    }
+        .input-group input:focus {
+            border-color: #2563eb;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
 
-    .toggle-btn:hover { color: #1a1a18; }
+        .input-group input:focus + i.input-icon {
+            color: #2563eb;
+        }
 
-    /* Error box */
-    .error-box {
-      background: #fcebeb;
-      border: 1px solid #f09595;
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 13px;
-      color: #a32d2d;
-      margin-bottom: 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        /* Password Toggle */
+        .pw-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #94a3b8;
+            padding: 4px;
+            transition: color 0.2s;
+        }
 
-    .btn-login {
-      width: 100%; height: 42px;
-      background: #1a1a18; color: #ffffff;
-      border: none; border-radius: 8px;
-      font-size: 14px; font-weight: 500;
-      font-family: inherit; cursor: pointer;
-      display: flex; align-items: center;
-      justify-content: center; gap: 8px;
-      margin-top: 1.5rem;
-      transition: opacity 0.15s;
-    }
+        .pw-toggle:hover { color: #1e293b; }
 
-    .btn-login:hover  { opacity: 0.85; }
-    .btn-login:active { transform: scale(0.98); }
+        /* 3. Error Feedback */
+        .error-alert {
+            background: #fff1f2;
+            border-left: 4px solid #e11d48;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #9f1239;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: shake 0.4s ease-in-out;
+        }
 
-    .footer {
-      text-align: center;
-      font-size: 12px; color: #b4b2a9;
-      margin-top: 1.25rem;
-    }
-  </style>
+        /* 4. Action Button */
+        .btn-submit {
+            width: 100%;
+            height: 50px;
+            background: #1e3a8a; /* Deep Blue */
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #1e40af;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+        }
+
+        .btn-submit:active { transform: translateY(0); }
+
+        .footer-text {
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 2.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
 </head>
 <body>
 
-<div class="wrapper">
-
-  <div class="header">
-    <div class="logo-circle">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    </div>
-    <h1>The Bellagio Mansion</h1>
-    <p>Masuk ke akun Anda</p>
-  </div>
-
-  <div class="card">
-
-    <!-- Pesan error dari auth.php -->
-    <?php if (!empty($loginError)): ?>
-    <div class="error-box">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-      </svg>
-      <?= htmlspecialchars($loginError) ?>
-    </div>
-    <?php endif; ?>
-
-    <!-- Form — action ke auth.php, method POST -->
-    <form action="auth.php" method="post">
-
-      <div class="field">
-        <label for="username">Username</label>
-        <div class="input-wrap">
-          <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-          <input type="text" id="username" name="username"
-            placeholder="Masukkan username"
-            autocomplete="off" autofocus required>
+<div class="login-container">
+    <header class="brand-section">
+        <div class="logo-wrapper">
+            <img src="assets/images/bellman.png" alt="The Bellagio Mansion Logo">
         </div>
-      </div>
+        <h1>The Bellagio Mansion</h1>
+        <p>Sistem Keamanan Dokumen & Kriptografi</p>
+    </header>
 
-      <div class="field">
-        <label for="password">Password</label>
-        <div class="input-wrap">
-          <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0110 0v4"/>
-          </svg>
-          <input type="password" id="password" name="password"
-            placeholder="Masukkan password" required>
-          <button type="button" class="toggle-btn" id="toggle-pw" aria-label="Tampilkan password">
-            <svg id="eye-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          </button>
+    <main class="login-card">
+        <?php if (!empty($loginError)): ?>
+        <div class="error-alert">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span><?= htmlspecialchars($loginError) ?></span>
         </div>
-      </div>
+        <?php endif; ?>
 
-      <!-- name="login" wajib ada agar auth.php mengenali request -->
-      <button type="submit" name="login" class="btn-login">
-        Masuk
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
-          <polyline points="10 17 15 12 10 7"/>
-          <line x1="15" y1="12" x2="3" y2="12"/>
-        </svg>
-      </button>
+        <form action="auth.php" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-group">
+                    <i class="fa fa-user input-icon"></i>
+                    <input type="text" id="username" name="username" 
+                           placeholder="Masukkan ID Pengguna" 
+                           autocomplete="off" autofocus required>
+                </div>
+            </div>
 
-    </form>
-  </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <i class="fa fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" 
+                           placeholder="Masukkan Kata Sandi" required>
+                    <button type="button" class="pw-toggle" id="btn-toggle">
+                        <i class="fa fa-eye" id="icon-toggle"></i>
+                    </button>
+                </div>
+            </div>
 
-  <p class="footer">The Bellagio Mansion &copy; <?= date('Y') ?></p>
+            <button type="submit" name="login" class="btn-submit">
+                Login <i class="fa fa-arrow-right"></i>
+            </button>
+        </form>
+    </main>
+
+    <footer class="footer-text">
+        &copy; <?= date('Y') ?> The Bellagio Mansion. All Rights Reserved.
+    </footer>
 </div>
 
 <script>
-  const toggleBtn = document.getElementById('toggle-pw');
-  const pwInput   = document.getElementById('password');
-  const eyeIcon   = document.getElementById('eye-icon');
+    // Handle Show/Hide Password
+    const btnToggle  = document.getElementById('btn-toggle');
+    const inputPass  = document.getElementById('password');
+    const iconToggle = document.getElementById('icon-toggle');
 
-  const eyeOpen = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-  const eyeOff  = `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;
-
-  toggleBtn.addEventListener('click', () => {
-    const isPassword  = pwInput.type === 'password';
-    pwInput.type      = isPassword ? 'text' : 'password';
-    eyeIcon.innerHTML = isPassword ? eyeOff : eyeOpen;
-  });
+    btnToggle.addEventListener('click', () => {
+        const type = inputPass.getAttribute('type') === 'password' ? 'text' : 'password';
+        inputPass.setAttribute('type', type);
+        
+        // Toggle Icon Class
+        iconToggle.classList.toggle('fa-eye');
+        iconToggle.classList.toggle('fa-eye-slash');
+    });
 </script>
 
 </body>
