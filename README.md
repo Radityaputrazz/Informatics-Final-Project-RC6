@@ -7,25 +7,25 @@ Sistem Manajemen Dokumen Terenkripsi berbasis Web yang dirancang untuk menjaga k
 
 ## 📸 Preview Interface
 ### Login (Login Page)
-![Halaman Login](assets/screenshots/Login.png)
+![Halaman Login](assets/Screenshots/Login.png)
 
 ### Dashboard Admin
-![Dashboard Statistik Admin](assets/screenshots/Dashboard_Admin.png)
+![Dashboard Statistik Admin](assets/Screenshots/Dashboard_Admin.png)
 
 ### Enkripsi (Enkripsi Page)
-![Halaman Enkripsi](assets/screenshots/Enkrip.png)
+![Halaman Enkripsi](assets/Screenshots/Enkrip.png)
 
 ### Dekripsi (Dekripsi Page)
-![Halaman Dekripsi](assets/screenshots/Dekrip.png)
+![Halaman Dekripsi](assets/Screenshots/Dekrip.png)
 
 ### Daftar Berkas (Daftar Berkas Page)
-![Daftar Berkas](assets/screenshots/List_File.png)
+![Daftar Berkas](assets/Screenshots/List_File.png)
 
 ### Panduan Sistem (Help Page)
-![Halaman Bantuan](assets/screenshots/help.png)
+![Halaman Bantuan](assets/Screenshots/help.png)
 
 ### Dashboard User
-![Dashboard Statistik User](assets/screenshots/Dashboard_User.png)
+![Dashboard Statistik User](assets/Screenshots/Dashboard_User.png)
 
 
 ## 🚀 Fitur Utama
