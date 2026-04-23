@@ -5,6 +5,29 @@
 
 Sistem Manajemen Dokumen Terenkripsi berbasis Web yang dirancang untuk menjaga kerahasiaan data administrasi di Apartemen The Bellagio Mansion. Aplikasi ini mengimplementasikan algoritma kriptografi **RC6 (Rivest Cipher 6)** untuk memastikan setiap berkas yang disimpan tidak dapat diakses oleh pihak yang tidak berwenang.
 
+## 📸 Preview Interface
+### Login (Login Page)
+![Halaman Login](assets/screenshots/Login.png)
+
+### Dashboard Admin
+![Dashboard Statistik Admin](assets/screenshots/Dashboard_Admin.png)
+
+### Enkripsi (Enkripsi Page)
+![Halaman Enkripsi](assets/screenshots/Enkrip.png)
+
+### Dekripsi (Dekripsi Page)
+![Halaman Dekripsi](assets/screenshots/Dekrip.png)
+
+### Daftar Berkas (Daftar Berkas Page)
+![Daftar Berkas](assets/screenshots/List_File.png)
+
+### Panduan Sistem (Help Page)
+![Halaman Bantuan](assets/screenshots/help.png)
+
+### Dashboard User
+![Dashboard Statistik User](assets/screenshots/Dashboard_User.png)
+
+
 ## 🚀 Fitur Utama
 - **Advanced Encryption Standard:** Menggunakan algoritma **RC6** dengan kunci simetris untuk enkripsi dan dekripsi berkas (.pdf, .docx, .jpg, .png, dll).
 - **Modern Dashboard:** Statistik real-time untuk memantau total pengguna dan status keamanan berkas (Terenkripsi/Terdekripsi).
