@@ -29,6 +29,7 @@ Algoritma ini dipilih karena efisiensinya dalam pemrosesan data pada arsitektur 
 
 ## ⚙️ Instalasi
 1. Clone repository ini:
+   ```bash
    git clone https://github.com/Radityaputrazz/Informatics-Final-Project-RC6.git
    
 3. Import file database .sql (tersedia di folder database) ke MySQL Anda.
