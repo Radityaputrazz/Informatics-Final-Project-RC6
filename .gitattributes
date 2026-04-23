@@ -1,5 +1,1 @@
-# Mengabaikan folder assets dari statistik bahasa
-assets/* linguist-vendored
-
-# Atau jika ingin spesifik mengabaikan semua file JS
 *.js linguist-vendored
